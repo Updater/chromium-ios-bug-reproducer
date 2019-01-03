@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <base href="/">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <title>Chromium on IOS Data Clone Error Reproducer</title>
+</head>
+
+<body>
+
+  <button id="refresh">Refresh Demo</button>
+
+  <button id="toggleInstructions">Toggle Instructions</button>
+
+  <div id="instructions">
+    <h3>About the Demo</h3>
+    All of these instructions can be minimized with the
+    <strong>Toggle Instructions</strong> button
+    <br/>
+    <br/> This demo has 2 instances each of 2 components.
+    <br/>
+    <code>chromium-test-shadow</code> has our reproducer code within shadowDom.
+    <br />
+    <code>chromium-test-html</code> has our reproducer code within regular html (not shadowDom)
+    <br /> Each of these components has 2 examples below. One where a function is passed in via
+    <code>value</code> property, and one where it is not.
+    <br /> There is a
+    <strong>Refresh Demo</strong> button up top to reload the page in a clean slate, since this page may be statically hosted without
+    fallbacks for history API, so this is a convience and alternative to hitting the browser refresh button.
+    <br /> At the bottom, there is a button to
+    <strong>Call __gCrWeb.message.getMessageQueue</strong>. The current observation is that if an "error" state is entered, calling
+    this function will typically clear the errors from happening.
+
+    <h3>Test Code</h3>
+
+    Each component test below has 5 buttons which perform the same action across all examples.
+    <ul>
+      <li>a) Will fire a regular change event on the component</li>
+      <li>b) Will fire a change event with composed/bubbles on the component</li>
+      <li>c) Will will run our test which will either log succesfully or log exception message and strack trace</li>
+      <li>d) Will will run (a) and then (c) syncronously</li>
+      <li>e) Will will run (b) and then (c) syncronously</li>
+    </ul>
+
+    <h3> Test Procedure </h3>
+
+    In order to reproduce, here are a few observations noted from playing
+    <br/> (note: Refreshing between tests is recommended, but you can also play with the
+    <code>getMessageQueue</code> function to reset states)
+
+    <ul>
+      <li>In Example (1), Click (a) then click (c) and the test will pass</li>
+      <li>In Example (1), Click (b) then click (c) and the test will fail</li>
+      <li>In Example (1), Click (d) and the test will fail</li>
+      <li>In Example (1), Click (e) and the test will fail</li>
+    </ul>
+    <ul>
+      <li>In Example (2), Click (a) then click (c) and the test will pass</li>
+      <li>In Example (2), Click (b) then click (c) and the test will pass</li>
+      <li>In Example (2), Click (d) and the test will fail</li>
+      <li>In Example (2), Click (e) and the test will fail</li>
+    </ul>
+    <ul>
+      <li>In Examples (3) and (4), no actions will fail the test from a clean slate</li>
+      <li>In Examples (3) and (4), and having already caused a failure followig one of the above steps, clicking (c), (d), or
+        (e) will cause a failure
+      </li>
+    </ul>
+    <ul>
+      <li>For all examples, provoking a failure will cause (c) to always fail for all examples </li>
+      <li>For all examples, after provoking a failure, clicking the _gCrWeb.message.getMessageQueue function will return force
+        all examples to work the same as a clean slate</li>
+    </ul>
+  </div>
+
+  <h3> Reproducer / Demo </h3>
+
+  <h4>1) Component with ShadowRoot &#9989; and passing in function &#9989;</h4>
+
+  <chromium-test-shadow class="withFunction"></chromium-test-shadow>
+
+  <h4>2) Component without ShadowRoot &#10060; and passing in function &#9989;</h4>
+
+  <chromium-test-html class="withFunction"></chromium-test-html>
+  <br/>
+
+  <h4>3) Component with ShadowRoot &#9989; and not passing in function &#10060;</h4>
+
+  <chromium-test-shadow></chromium-test-shadow>
+
+  <h4>4) Component without ShadowRoot &#10060; and not passing in function &#10060;</h4>
+
+  <chromium-test-html></chromium-test-html>
+  <br/>
+
+  <h3>In order prevent further exceptions once they have occured, click this button</h3>
+
+  <button id="callGetMessageQueue">Call __gCrWeb.message.getMessageQueue</button>
+
+  <h4>Logs will be printed below (latest first)</h4>
+  <div id="console"></div>
+<script type="text/javascript" src="main.8446ae365f74afe059ba.bundle.js"></script></body>
+
+</html>

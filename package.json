@@ -1,0 +1,29 @@
+{
+  "name": "reproducer",
+  "version": "0.0.0-development",
+  "repository": "git@github.com:Updater/chromium-ios-bug-reproducer.git",
+  "scripts": {
+    "build": "yarn webpack --config ./webpack.config.js",
+    "clean": "rimraf ./dist ./dist",
+    "demo": "yarn webpack-dev-server --config ./webpack.config.js",
+    "serve": "http-server /dist"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-syntax-dynamic-import": "^6.18.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-custom-element-classes": "^0.1.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "html-webpack-plugin": "^2.30.1",
+    "http-server": "^0.11.1",
+    "ramda": "^0.25.0",
+    "raw-loader": "^0.5.1",
+    "rimraf": "^2.6.2",
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.11.1"
+  }
+}

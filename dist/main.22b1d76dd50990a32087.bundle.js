@@ -57,10 +57,10 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "chromium-ios-bug-reproducer/dist/";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 2);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -73,15 +73,19 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
+exports.runTest = undefined;
+
+var _utils = __webpack_require__(1);
+
 var count = 0;
 
 var runTest = exports.runTest = function runTest() {
   var failed = false;
   try {
-    history.pushState(null, '', 'test-me' + count);
+    window.history.pushState(null, '', 'test-me' + count);
     count++;
   } catch (ex) {
-    document.querySelector('#console').innerHTML += '\n    <code><pre>PushState Exception: ' + ex.message + '\n' + ex.stack + '</pre></code>';
+    (0, _utils.logToConsole)('<code><pre>PushState Exception: ' + ex.message + '\n' + ex.stack + '</pre></code>');
     failed = true;
   }
 
@@ -89,12 +93,12 @@ var runTest = exports.runTest = function runTest() {
     console.log('hello');
     console.log('hello2');
   } catch (ex) {
-    document.querySelector('#console').innerHTML += '\n    <code><pre>ConsoleLog Exception: ' + ex.message + '\n' + ex.stack + '</pre></code>';
+    (0, _utils.logToConsole)('<code><pre>ConsoleLog Exception: ' + ex.message + '\n' + ex.stack + '</pre></code>');
     failed = true;
   }
 
   if (!failed) {
-    document.querySelector('#console').innerHTML += '\n    <code><pre>Test Ran Successfully</pre></code>';
+    (0, _utils.logToConsole)('<code><pre>Test Ran Successfully</pre></code>');
   }
 };
 
@@ -105,14 +109,33 @@ var runTest = exports.runTest = function runTest() {
 "use strict";
 
 
-__webpack_require__(2);
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var logToConsole = exports.logToConsole = function logToConsole(html) {
+  var initalHtml = document.querySelector('#console').innerHTML;
+  document.querySelector('#console').innerHTML = html + initalHtml;
+};
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
 
 __webpack_require__(3);
 
+__webpack_require__(4);
+
+var _utils = __webpack_require__(1);
+
+// Switch between regular function in object and nested
+// No observable differences
 var testScenario = 'with_function';
 // const testScenario = 'with_nested_function';
 
-['upd-chromium-test-component-shadow.withFunction', 'upd-chromium-test-component-html.withFunction'].forEach(function (selector) {
+['chromium-test-shadow.withFunction', 'chromium-test-html.withFunction'].forEach(function (selector) {
   var app = document.querySelector(selector);
   if (testScenario === 'with_function') {
     app.value = {
@@ -131,17 +154,35 @@ var testScenario = 'with_function';
 
 var getMessageQueue = function getMessageQueue() {
   try {
-    __gCrWeb.message.getMessageQueue();
+    window.__gCrWeb.message.getMessageQueue();
   } catch (ex) {
-    document.querySelector('#console').innerHTML += '\n    <code><pre>GetMessageQueue Exception: ' + ex.message + '\n' + ex.stack + '</pre></code>';
+    (0, _utils.logToConsole)('\n    <code><pre>GetMessageQueue Exception: ' + ex.message + '\n' + ex.stack + '</pre></code>');
   }
 };
 
 var callGetMessageQueue = document.querySelector('#callGetMessageQueue');
 callGetMessageQueue.addEventListener('click', getMessageQueue);
 
+// In order to make refreshing easier for gh-pages
+var initialHref = window.location.href;
+var refreshDemo = document.querySelector('#refresh');
+refreshDemo.addEventListener('click', function () {
+  window.location.href = initialHref;
+});
+
+// in order to make it easier to play with functionality
+// without the text getting in the way
+var toggleInstructions = document.querySelector("#toggleInstructions");
+var state = localStorage.getItem('instruction-state');
+document.querySelector('#instructions').style.display = state ? state : 'block';
+toggleInstructions.addEventListener('click', function () {
+  var instructions = document.querySelector('#instructions');
+  instructions.style.display = instructions.style.display === 'block' ? 'none' : 'block';
+  localStorage.setItem('instruction-state', instructions.style.display);
+});
+
 /***/ }),
-/* 2 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -199,7 +240,7 @@ var ChromiumTestComponent = function (_CustomElement2) {
   }, {
     key: 'fireChangeEventAndRunTest',
     value: function fireChangeEventAndRunTest() {
-      this.fireChangeEvent();
+      this.fireComposedChangeEvent();
       (0, _runTest.runTest)();
     }
   }, {
@@ -232,10 +273,10 @@ var ChromiumTestComponent = function (_CustomElement2) {
 exports.default = ChromiumTestComponent;
 
 
-customElements.define('upd-chromium-test-component-shadow', ChromiumTestComponent);
+customElements.define('chromium-test-shadow', ChromiumTestComponent);
 
 /***/ }),
-/* 3 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -296,7 +337,7 @@ var ChromiumTestComponent = function (_CustomElement2) {
   }, {
     key: 'fireComposedChangeEventAndRunTest',
     value: function fireComposedChangeEventAndRunTest() {
-      this.fireChangeEvent();
+      this.fireComposedChangeEvent();
       (0, _runTest.runTest)();
     }
   }, {
@@ -323,8 +364,8 @@ var ChromiumTestComponent = function (_CustomElement2) {
 exports.default = ChromiumTestComponent;
 
 
-customElements.define('upd-chromium-test-component-html', ChromiumTestComponent);
+customElements.define('chromium-test-html', ChromiumTestComponent);
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.3487a24fe76569c9f57c.bundle.js.map
+//# sourceMappingURL=main.22b1d76dd50990a32087.bundle.js.map

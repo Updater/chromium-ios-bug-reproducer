@@ -3,10 +3,10 @@
   "version": "0.0.0-development",
   "repository": "git@github.com:Updater/chromium-ios-bug-reproducer.git",
   "scripts": {
-    "build": "yarn webpack --config ./webpack.config.js",
+    "build": "yarn webpack --config ./webpack.build.config.js",
     "clean": "rimraf ./dist ./dist",
     "demo": "yarn webpack-dev-server --config ./webpack.config.js",
-    "serve": "http-server /dist"
+    "serve": "http-server ./dist"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

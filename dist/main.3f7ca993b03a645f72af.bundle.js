@@ -57,7 +57,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/ 	__webpack_require__.p = "dist/chromium-ios-bug-reproducer/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 2);
@@ -368,4 +368,4 @@ customElements.define('chromium-test-html', ChromiumTestComponent);
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.8446ae365f74afe059ba.bundle.js.map
+//# sourceMappingURL=main.3f7ca993b03a645f72af.bundle.js.map

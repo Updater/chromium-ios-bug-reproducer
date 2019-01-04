@@ -1,6 +1,10 @@
 import { runTest } from '../runTest';
 
 export default class ChromiumTestComponent extends HTMLElement {
+  constructor() {
+    super();
+    this.setAttribute('tabindex', 0);
+  }
   fireChangeEvent() {
     this.dispatchEvent(new Event('change'));
   }
@@ -26,6 +30,8 @@ export default class ChromiumTestComponent extends HTMLElement {
 
   connectedCallback() {
     super.connectedCallback && super.connectedCallback();
+
+
     this.innerHTML = `
       <button class="fireChangeEvent">
         A) Fire Change Event 

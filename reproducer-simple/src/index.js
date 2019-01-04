@@ -13,7 +13,6 @@ class Test extends HTMLElement {
   }
 
   connectedCallback() {
-    super.connectedCallback && super.connectedCallback();
     this.innerHTML = `
     <button>Reproduce</button>
     `;

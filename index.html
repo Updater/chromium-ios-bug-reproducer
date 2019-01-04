@@ -15,7 +15,12 @@
   <button id="toggleInstructions">Toggle Instructions</button>
 
   <div id="instructions">
-    <h3>About the Demo</h3>
+    <h3>About the Demo (Updated 1/4)</h3>
+
+    <h4>1/4 Update -> Both components now have <code>tabindex</code> being set
+    in the constructor. This causes failures on 71+. Previous version of this Demo
+    was only tested on chrome 64 and did not fail on 71+. Now that the code is updated,
+    Test procedure has also been modified slightly as observed behaviours changed.</h4>
     All of these instructions can be minimized with the
     <strong>Toggle Instructions</strong> button
     <br/>
@@ -44,23 +49,17 @@
       <li>e) Will will run (b) and then (c) syncronously</li>
     </ul>
 
-    <h3> Test Procedure </h3>
+    <h3> Test Procedure (For chrome 71+)</h3>
 
     In order to reproduce, here are a few observations noted from playing
     <br/> (note: Refreshing between tests is recommended, but you can also play with the
-    <code>getMessageQueue</code> function to reset states)
+    <code>getMessageQueue</code> function to reset states - this seems to work reliably)
 
     <ul>
-      <li>In Example (1), Click (a) then click (c) and the test will pass</li>
-      <li>In Example (1), Click (b) then click (c) and the test will fail</li>
-      <li>In Example (1), Click (d) and the test will fail</li>
-      <li>In Example (1), Click (e) and the test will fail</li>
-    </ul>
-    <ul>
-      <li>In Example (2), Click (a) then click (c) and the test will pass</li>
-      <li>In Example (2), Click (b) then click (c) and the test will pass</li>
-      <li>In Example (2), Click (d) and the test will fail</li>
-      <li>In Example (2), Click (e) and the test will fail</li>
+      <li>In Examples (1) and (2), Click (a) then click (c) and the test will <strong style="color:red">fail</strong></li>
+      <li>In Examples (1) and (2), Click (b) then click (c) and the test will <strong style="color:red">fail</strong></li>
+      <li>In Examples (1) and (2), Click (d) <strong>TWO</strong> times and the test will <strong style="color:red">fail</strong></li>
+      <li>In Examples (1) and (2), Click (e) <strong>TWO</strong> times the test will <strong style="color:red">fail</strong></li>
     </ul>
     <ul>
       <li>In Examples (3) and (4), no actions will fail the test from a clean slate</li>
@@ -72,6 +71,21 @@
       <li>For all examples, provoking a failure will cause (c) to always fail for all examples </li>
       <li>For all examples, after provoking a failure, clicking the _gCrWeb.message.getMessageQueue function will return force
         all examples to work the same as a clean slate</li>
+      <li>After calling _gCrWeb.message.getMessageQueue, attempting to cause failures following 
+        the above steps may not cause failures any longer
+      </li>
+    </ul>
+
+    <h3> Conclusions </h3>
+
+    In conclusion the following is noted
+    <ul>
+      <li>No differences between shadow and non shadow components in v71+</li>
+      <li>Test procuedure slighty different in chrome 64 vs chrome 71+</li>
+      <li><code>this.setAttribute('tabindex',0)</code> is required in chrome 71+</li>
+      <li>change event dispatch and function passed to 
+        component (or parent / ancestor) required to reproduce bug
+      </li>
     </ul>
   </div>
 
@@ -101,6 +115,6 @@
 
   <h4>Logs will be printed below (latest first)</h4>
   <div id="console"></div>
-<script type="text/javascript" src="chromium-ios-bug-reproducer/dist/main.22b1d76dd50990a32087.bundle.js"></script></body>
+<script type="text/javascript" src="chromium-ios-bug-reproducer/reproducer-custom-element/dist/main.4c53378aac3f2340c57f.bundle.js"></script></body>
 
 </html>

@@ -4,6 +4,7 @@ export default class ChromiumTestComponent extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this.setAttribute('tabindex', 0);
   }
 
   fireChangeEvent() {
@@ -20,12 +21,12 @@ export default class ChromiumTestComponent extends HTMLElement {
   }
 
   fireChangeEventAndRunTest() {
-    this.fireComposedChangeEvent();
+    this.fireChangeEvent();
     runTest();
   }
 
   fireComposedChangeEventAndRunTest() {
-    this.fireChangeEvent();
+    this.fireComposedChangeEvent();
     runTest();
   }
 

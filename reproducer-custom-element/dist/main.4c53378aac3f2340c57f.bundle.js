@@ -57,7 +57,7 @@
 /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
 /******/
 /******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "chromium-ios-bug-reproducer/old/dist/";
+/******/ 	__webpack_require__.p = "chromium-ios-bug-reproducer/reproducer-custom-element/dist/";
 /******/
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(__webpack_require__.s = 2);
@@ -221,6 +221,7 @@ var ChromiumTestComponent = function (_CustomElement2) {
     var _this = _possibleConstructorReturn(this, (ChromiumTestComponent.__proto__ || Object.getPrototypeOf(ChromiumTestComponent)).call(this));
 
     _this.attachShadow({ mode: 'open' });
+    _this.setAttribute('tabindex', 0);
     return _this;
   }
 
@@ -312,7 +313,10 @@ var ChromiumTestComponent = function (_CustomElement2) {
   function ChromiumTestComponent() {
     _classCallCheck(this, ChromiumTestComponent);
 
-    return _possibleConstructorReturn(this, (ChromiumTestComponent.__proto__ || Object.getPrototypeOf(ChromiumTestComponent)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (ChromiumTestComponent.__proto__ || Object.getPrototypeOf(ChromiumTestComponent)).call(this));
+
+    _this.setAttribute('tabindex', 0);
+    return _this;
   }
 
   _createClass(ChromiumTestComponent, [{
@@ -368,4 +372,4 @@ customElements.define('chromium-test-html', ChromiumTestComponent);
 
 /***/ })
 /******/ ]);
-//# sourceMappingURL=main.b8263f4fce982cf1ee85.bundle.js.map
+//# sourceMappingURL=main.4c53378aac3f2340c57f.bundle.js.map

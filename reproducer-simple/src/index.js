@@ -8,6 +8,10 @@ document.querySelector('#button').addEventListener('click', () => {
     x: () => {}
   };
 
+  alert('hi')
+
+  document.querySelector('#a').setAttribute('tabindex', 0);
+
   document.querySelector("#a").dispatchEvent(new Event('change'));
 
   try {

@@ -18,6 +18,6 @@ Webpack dev server used for local dev. Build is used to create static page for i
 
 > For all intents and purposes, focus on the "reproducer-custom-element" which is built using `yarn demo:custom`
 
-> But if so desired, you can also test with "reproducer-simple" on older versions of chrome by using `yarn demo:simpe`
+> But if so desired, you can also test with "reproducer-simple" on older versions of chrome by using `yarn demo:simple`
 
 

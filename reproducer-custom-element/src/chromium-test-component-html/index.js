@@ -1,6 +1,11 @@
 import { runTest } from '../runTest';
 
 export default class ChromiumTestComponent extends HTMLElement {
+  constructor() {
+    super();
+    this.setAttribute('tabindex', 0);
+  }
+  
   fireChangeEvent() {
     this.dispatchEvent(new Event('change'));
   }
